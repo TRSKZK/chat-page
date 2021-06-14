@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 const HeaderEl = styled.header`
 background-color: #1f1f20;
@@ -31,11 +32,22 @@ text-align: end;
 
 
 export const Header = () => {
+
+    const messages = useSelector(state => state.messages.messages)
+    
+    const users = Object.entries(messages).map(([user, key]) => key.user)
+
+    const uniqUsers = new Set(users)
+
+    const lastMessage = messages.slice(-1)
+    
+    const lastDate = Object.entries(lastMessage).map(([_,key])=> key.created_at)
+   
     return (
         <HeaderEl>
             <HeaderLogo href='#'>My Chat</HeaderLogo>
-            <InfoCont>7 users  9 messages</InfoCont>
-            <DateCont>Last message date:bla bla bla blabla</DateCont>
+            <InfoCont> {uniqUsers.size} users  {messages.length} messages</InfoCont>
+            <DateCont>Last message date:{lastDate}</DateCont>
         </HeaderEl>
     )
 }

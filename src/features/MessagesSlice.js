@@ -14,14 +14,14 @@ const initialState = {
         "avatar": "https://i.pravatar.cc/300?img=14",
         "created_at": "2021-05-17 23:54:45",
         "message": "Nay, not yet:-("
-      },
-      {
-        "id": "9333000183103",
-        "user": "Taylor",
-        "avatar": "https://i.pravatar.cc/300?img=12",
-        "created_at": "2021-05-18 10:23:00",
-        "message": "I have! Let’s discuss it)"
-        }],
+        },
+        {
+            "id": "9333000183102",
+            "user": "Dave",
+            "avatar": "https://i.pravatar.cc/300?img=14",
+            "created_at": "2021-05-17 23:54:45",
+            "message": "Nay, not yet:-("
+          }],
     
     status: 'Idle',
     error: null,
