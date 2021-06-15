@@ -58,7 +58,7 @@ export const Messages = () => {
             <TextWrapper>
                 <UserName>{message.user}</UserName>
                 <MessageEl user={message.user}>{message.message}</MessageEl>
-                <ReactionButtons user={message.user}/>
+                <ReactionButtons id={message.id} user={message.user}/>
             </TextWrapper>
             
         </MessageWrap>

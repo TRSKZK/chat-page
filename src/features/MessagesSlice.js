@@ -50,12 +50,16 @@ const MessagesSlice = createSlice({
           }
         }
       },
-      deleteMessage: (state, action){
-        
+
+      deleteMessage(state, action) {
+        const id = action.payload
+        // const existingPost = state.messages.find((i, message) => i === id ? i : null)
+        state.messages.splice(id, 1)
+        console.log(id);
       }
     }
 
 })
 
-export const  {addMessage} = MessagesSlice.actions
+export const  {addMessage, deleteMessage} = MessagesSlice.actions
 export default MessagesSlice.reducer
