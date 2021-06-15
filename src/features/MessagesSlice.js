@@ -32,10 +32,27 @@ const MessagesSlice = createSlice({
     initialState,
 
     reducers: {
+      addMessage: {
+        reducer(state, action) {
+          state.messages.push(action.payload)
+        },
 
+        prepare(message) {
+          return {
+            payload: {
+              id: nanoid(),
+              user: "Taras",
+              avatar: "https://i.pravatar.cc/300?img=14",
+              created_at: new Date().toISOString(),
+              message,
+            }
+            
+          }
+        }
+      }
     }
 
 })
 
-
+export const  {addMessage} = MessagesSlice.actions
 export default MessagesSlice.reducer

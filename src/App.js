@@ -1,6 +1,7 @@
 import React from "react";
 import { Header } from './app/Header'
-import {ChatMessageContainer} from './features/ChatMessageContainer'
+import { ChatMessageContainer } from './features/ChatMessageContainer'
+import {TypeMessageForm} from './features/TypeMessageForm'
 
 
 
@@ -9,7 +10,7 @@ function App() {
     <div>
       <Header/>
       <ChatMessageContainer/>
-     
+      <TypeMessageForm/>
     </div>
   );
 }
