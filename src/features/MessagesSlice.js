@@ -64,7 +64,9 @@ const MessagesSlice = createSlice({
       },
       increaseLike(state, action) {
         const id = action.payload
-        const existingMessage = state.messages.find(message=> message.id === id)
+        const existingMessage = state.messages.find(message => message.id === id)
+        console.log(id);
+        if(existingMessage) existingMessage.like += 1
       }
     }
 

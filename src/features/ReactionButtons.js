@@ -38,20 +38,28 @@ export const ReactionButtons = ({ user, id}) => {
     const dispatch = useDispatch()
     const messages = useSelector(state => state.messages.messages)
     
+    const findMessageId = () => {
+        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? i: null )
+        const rightMessage = messagesIds.find((messageid) => messageid !== null)
+        return rightMessage
+    }
    
     
     const deleteOnClick = () => {
-        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? i: null )
-        const rightMessage = messagesIds.find((messageid) => messageid !== null)
+        const rightMessage = findMessageId()
         dispatch(deleteMessage(rightMessage))
     }
     
-    
+    const handleAddLikesBtn = () => {
+        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? message.id : null )
+        const rightMessage = messagesIds.find((messageid) => messageid !== null)
+        dispatch(increaseLike(rightMessage))
+    }
 
     
     return (
         <ReactionWrapp>
-            <Heart user={user} icon={farHeart} />
+            <Heart onClick={handleAddLikesBtn} user={user} icon={farHeart} />
             
             <TrashIcon
                 onClick={deleteOnClick}
