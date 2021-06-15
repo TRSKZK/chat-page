@@ -59,7 +59,8 @@ export const TypeMessageForm = () => {
             />
             <SendMessageBtn onClick={(e) => {
                 e.preventDefault()
-                dispatch(addMessage( message ))
+                dispatch(addMessage(message))
+                setMessage('')
             }}>Send</SendMessageBtn>
         </MessageForm>
     )

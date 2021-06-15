@@ -43,12 +43,15 @@ const MessagesSlice = createSlice({
               id: nanoid(),
               user: "Taras",
               avatar: "https://i.pravatar.cc/300?img=14",
-              created_at: new Date().toISOString(),
+              created_at: new Date().toLocaleString(),
               message,
             }
             
           }
         }
+      },
+      deleteMessage: (state, action){
+        
       }
     }
 
