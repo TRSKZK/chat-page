@@ -1,7 +1,8 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { ReactionButtons } from './ReactionButtons'
+import { addLikeField } from './MessagesSlice'
 
 
 
@@ -46,10 +47,17 @@ right:10px;
 top:10px;
 color:#a1a1a1;
 `
- 
+const ButtonWrapp = styled.div`
+margin: ${props=> props.user === "Taras"? '0 0 -10px 0;': '-15px 0 0px 0;'}
+display:flex;
+gap: 5px;
+ `
 
 export const Messages = () => {
     const messages = useSelector(state => state.messages.messages)
+    const dispatch = useDispatch()
+
+    useEffect(()=> dispatch(addLikeField()),[])
     
     const renderMessage = Object.entries(messages).map(([i, message]) => (
         <MessageWrap user={message.user} key={i}>
@@ -58,7 +66,10 @@ export const Messages = () => {
             <TextWrapper>
                 <UserName>{message.user}</UserName>
                 <MessageEl user={message.user}>{message.message}</MessageEl>
-                <ReactionButtons id={message.id} user={message.user}/>
+                <ButtonWrapp user={message.user}>
+                    <ReactionButtons id={message.id} user={message.user} />
+                    {message.user === 'Taras' ? null : message.like}
+                </ButtonWrapp>
             </TextWrapper>
             
         </MessageWrap>

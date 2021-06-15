@@ -45,6 +45,7 @@ const MessagesSlice = createSlice({
               avatar: "https://i.pravatar.cc/300?img=14",
               created_at: new Date().toLocaleString(),
               message,
+              like: 0
             }
             
           }
@@ -53,13 +54,21 @@ const MessagesSlice = createSlice({
 
       deleteMessage(state, action) {
         const id = action.payload
-        // const existingPost = state.messages.find((i, message) => i === id ? i : null)
         state.messages.splice(id, 1)
-        console.log(id);
+        
+      },
+
+      addLikeField(state, action) {
+        const messages = state.messages
+        Object.entries(messages).forEach(([i, key])=> key.like=0)
+      },
+      increaseLike(state, action) {
+        const id = action.payload
+        const existingMessage = state.messages.find(message=> message.id === id)
       }
     }
 
 })
 
-export const  {addMessage, deleteMessage} = MessagesSlice.actions
+export const  {addMessage, deleteMessage, addLikeField, increaseLike} = MessagesSlice.actions
 export default MessagesSlice.reducer

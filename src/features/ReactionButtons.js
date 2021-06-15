@@ -5,7 +5,7 @@ import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faEdit as farEdit } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
-import {deleteMessage} from './MessagesSlice'
+import {deleteMessage, increaseLike} from './MessagesSlice'
 
 
 const Heart = styled(FontAwesomeIcon)`
@@ -37,20 +37,24 @@ gap: 5px;
 export const ReactionButtons = ({ user, id}) => {
     const dispatch = useDispatch()
     const messages = useSelector(state => state.messages.messages)
-    const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? i: null )
     
-    const findIdOnClick = () => {
+   
+    
+    const deleteOnClick = () => {
+        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? i: null )
         const rightMessage = messagesIds.find((messageid) => messageid !== null)
-        console.log(rightMessage)
         dispatch(deleteMessage(rightMessage))
     }
     
     
+
+    
     return (
         <ReactionWrapp>
             <Heart user={user} icon={farHeart} />
+            
             <TrashIcon
-                onClick={findIdOnClick}
+                onClick={deleteOnClick}
                 user={user} icon={faTrashAlt} />
             <EditIcon  user={user} icon={farEdit}/>
         </ReactionWrapp>
