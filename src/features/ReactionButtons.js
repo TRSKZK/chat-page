@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faEdit as farEdit, faThumbsDown, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
-import {deleteMessage, increaseLike} from './MessagesSlice'
+import {deleteMessage, increaseLike, decreaseLike} from './MessagesSlice'
 
 
 const Heart = styled(FontAwesomeIcon)`
@@ -26,11 +26,16 @@ display: ${props => props.user === 'Taras' ? 'block' : 'none'};
 const EditIcon = styled(TrashIcon)`
 `
 
-const DislikeButton = styled(Heart)``
+const DislikeButton = styled(Heart)`
+position: absolute;
+left: 37px;
+top: 15px;
+`
 
 
 const ReactionWrapp = styled.div`
 display:flex;
+position: relative;
 align-items: center;
 justify-content: center;
 gap: 5px;
@@ -52,17 +57,23 @@ export const ReactionButtons = ({ user, id}) => {
     }
     
     const handleAddLikesBtn = () => {
-        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? message.id : null )
+        const messagesIds = Object.entries(messages).map(([_, message]) => message.id === id ? message.id : null )
         const rightMessage = messagesIds.find((messageid) => messageid !== null)
         dispatch(increaseLike(rightMessage))
     }
-
+     
+    const handleDislikeBtn = () => {
+        const messagesIds = Object.entries(messages).map(([_, message]) => message.id === id ? message.id : null )
+        const rightMessage = messagesIds.find((messageid) => messageid !== null)
+        dispatch(decreaseLike(rightMessage))
+    }
     
     return (
         <ReactionWrapp>
+            <Heart onClick={handleAddLikesBtn} user={user}
+                icon={farHeart}></Heart>
             
-            <Heart onClick={handleAddLikesBtn} user={user} icon={farHeart} />
-            <DislikeButton user={user} icon={faThumbsDown}/>
+            <DislikeButton onClick={handleDislikeBtn} user={user} icon={faThumbsDown}/>
             
             <TrashIcon
                 onClick={deleteOnClick}

@@ -53,11 +53,19 @@ const MessagesSlice = createSlice({
         const messages = state.messages
         Object.entries(messages).forEach(([i, key])=> key.like=0)
       },
+
       increaseLike(state, action) {
         const id = action.payload
         const existingMessage = state.messages.find(message => message.id === id)
         console.log(id);
         if(existingMessage) existingMessage.like += 1
+      },
+
+      decreaseLike(state, action) {
+        const id = action.payload
+        const existingMessage = state.messages.find(message => message.id === id)
+        console.log(id);
+        if(existingMessage) existingMessage.like -= 1
       }
   },
   extraReducers: {
@@ -77,5 +85,5 @@ const MessagesSlice = createSlice({
 
 })
 
-export const  {addMessage, deleteMessage, addLikeField, increaseLike} = MessagesSlice.actions
+export const  {addMessage, deleteMessage, addLikeField, increaseLike, decreaseLike} = MessagesSlice.actions
 export default MessagesSlice.reducer
