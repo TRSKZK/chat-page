@@ -1,7 +1,5 @@
 import React,{useEffect} from 'react'
-
 import { useSelector, useDispatch } from 'react-redux'
-
 import { addLikeField, fetchMessages } from './MessagesSlice'
 import { MessagesEl } from './MessagesEl'
 
@@ -9,27 +7,24 @@ import { MessagesEl } from './MessagesEl'
 
 
 export const Messages = () => {
-    const postStatus = useSelector(state=> state.messages.status)
+    const messageStatus = useSelector(state=> state.messages.status)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(postStatus === 'Idle'){
+        if(messageStatus === 'Idle'){
             dispatch(fetchMessages())
         }
         
         dispatch(addLikeField())
-    }, [dispatch, postStatus])
-
+    }, [dispatch, messageStatus])
     const messages = useSelector(state => state.messages.messages)
-
     
     let content;
-
-    if (postStatus === 'pendind') {
+    if (messageStatus === 'pending') {
         content = <div>Loading...</div>
-    } else if (postStatus === 'completed') {
+    } else if (messageStatus === 'completed') {
         content = Object.entries(messages).map(([_, message]) => <MessagesEl message={message} key={ message.id}/> )
-    } else if (postStatus === 'failed') {
+    } else if (messageStatus === 'failed') {
         content = <div>Rejected</div>
     }
 

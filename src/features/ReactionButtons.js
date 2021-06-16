@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faEdit as farEdit } from '@fortawesome/free-regular-svg-icons'
+import { faEdit as farEdit, faThumbsDown, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import {deleteMessage, increaseLike} from './MessagesSlice'
 
@@ -26,6 +25,8 @@ display: ${props => props.user === 'Taras' ? 'block' : 'none'};
 
 const EditIcon = styled(TrashIcon)`
 `
+
+const DislikeButton = styled(Heart)``
 
 
 const ReactionWrapp = styled.div`
@@ -59,7 +60,9 @@ export const ReactionButtons = ({ user, id}) => {
     
     return (
         <ReactionWrapp>
+            
             <Heart onClick={handleAddLikesBtn} user={user} icon={farHeart} />
+            <DislikeButton user={user} icon={faThumbsDown}/>
             
             <TrashIcon
                 onClick={deleteOnClick}

@@ -35,14 +35,17 @@ export const Header = () => {
 
     const messages = useSelector(state => state.messages.messages)
     
-    const users = Object.entries(messages).map(([user, key]) => key.user)
-
+    const users = Object.entries(messages).map(([_, key]) => key.user)
+    
     const uniqUsers = new Set(users)
 
     const lastMessage = messages.slice(-1)
     
     const lastDate = Object.entries(lastMessage).map(([_,key])=> key.created_at)
-   
+    
+    
+
+
     return (
         <HeaderEl>
             <HeaderLogo href='#'>My Chat</HeaderLogo>

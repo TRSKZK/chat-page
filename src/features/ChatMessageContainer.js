@@ -4,7 +4,7 @@ import {Messages} from './Messages'
 
 
 const ChatWindow = styled.div`
-height: 500px;
+height: 511px;
 width: 100%;
 padding: 15px 45px 15px 45px;
 overflow-y: scroll;
