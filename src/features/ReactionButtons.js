@@ -45,29 +45,36 @@ export const ReactionButtons = ({ user, id}) => {
     const messages = useSelector(state => state.messages.messages)
     
     const findMessageId = () => {
-        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? i: null )
+        const messagesIds = Object.entries(messages).map(([_, message]) => message.id === id ? message.id : null )
         const rightMessage = messagesIds.find((messageid) => messageid !== null)
         return rightMessage
     }
-   
     
+  
     const deleteOnClick = () => {
-        const rightMessage = findMessageId()
+        const messagesIds = Object.entries(messages).map(([i, message]) => message.id === id ? i: null )
+        const rightMessage = messagesIds.find((messageid) => messageid !== null)
         dispatch(deleteMessage(rightMessage))
     }
     
     const handleAddLikesBtn = () => {
-        const messagesIds = Object.entries(messages).map(([_, message]) => message.id === id ? message.id : null )
-        const rightMessage = messagesIds.find((messageid) => messageid !== null)
+        const rightMessage = findMessageId()
         dispatch(increaseLike(rightMessage))
     }
      
     const handleDislikeBtn = () => {
-        const messagesIds = Object.entries(messages).map(([_, message]) => message.id === id ? message.id : null )
-        const rightMessage = messagesIds.find((messageid) => messageid !== null)
+        const rightMessage = findMessageId()
         dispatch(decreaseLike(rightMessage))
     }
     
+    const handleEditButton = () => {
+        const rightMessage = findMessageId()
+        console.log(rightMessage);
+
+    }
+
+    
+
     return (
         <ReactionWrapp>
             <Heart onClick={handleAddLikesBtn} user={user}
@@ -78,7 +85,7 @@ export const ReactionButtons = ({ user, id}) => {
             <TrashIcon
                 onClick={deleteOnClick}
                 user={user} icon={faTrashAlt} />
-            <EditIcon  user={user} icon={farEdit}/>
+            <EditIcon onClick={handleEditButton} user={user} icon={farEdit}/>
         </ReactionWrapp>
     )
 
