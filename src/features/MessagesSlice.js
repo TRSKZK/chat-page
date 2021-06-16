@@ -1,5 +1,5 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+
 
 const initialState = {
     messages: [],
@@ -14,8 +14,6 @@ export const fetchMessages = createAsyncThunk('messages/fetchMessages', async ()
   return data
   
 })
-
-
 
 
 const MessagesSlice = createSlice({
