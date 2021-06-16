@@ -50,4 +50,6 @@ export const Header = () => {
             <DateCont>Last message date:{lastDate}</DateCont>
         </HeaderEl>
     )
+
+    
 }

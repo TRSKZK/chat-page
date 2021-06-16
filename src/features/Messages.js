@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { ReactionButtons } from './ReactionButtons'
-import { addLikeField } from './MessagesSlice'
+import { addLikeField, fetchMessages } from './MessagesSlice'
 
 
 
@@ -51,32 +51,56 @@ const ButtonWrapp = styled.div`
 margin: ${props=> props.user === "Taras"? '0 0 -10px 0;': '-15px 0 0px 0;'}
 display:flex;
 gap: 5px;
- `
+`
+
+
+const MessagesEl = ({message}) => (
+    <MessageWrap user={message.user} >
+        <UserImg src={message.avatar}></UserImg>
+        <PublishedAt>{message.created_at}</PublishedAt>
+        <TextWrapper>
+            <UserName>{message.user}</UserName>
+            <MessageEl user={message.user}>{message.message}</MessageEl>
+            <ButtonWrapp user={message.user}>
+                <ReactionButtons id={message.id} user={message.user} />
+                {message.user === 'Taras' ? null : message.like}
+            </ButtonWrapp>
+        </TextWrapper>
+        
+    </MessageWrap>
+)
+
+
 
 export const Messages = () => {
-    const messages = useSelector(state => state.messages.messages)
+    const postStatus = useSelector(state=> state.messages.status)
     const dispatch = useDispatch()
 
-    useEffect(()=> dispatch(addLikeField()),[])
-    
-    const renderMessage = Object.entries(messages).map(([i, message]) => (
-        <MessageWrap user={message.user} key={i}>
-            <UserImg src={message.avatar}></UserImg>
-            <PublishedAt>{message.created_at}</PublishedAt>
-            <TextWrapper>
-                <UserName>{message.user}</UserName>
-                <MessageEl user={message.user}>{message.message}</MessageEl>
-                <ButtonWrapp user={message.user}>
-                    <ReactionButtons id={message.id} user={message.user} />
-                    {message.user === 'Taras' ? null : message.like}
-                </ButtonWrapp>
-            </TextWrapper>
-            
-        </MessageWrap>
-    ))
+    useEffect(() => {
+        if(postStatus === 'Idle'){
+            dispatch(fetchMessages())
+        }
+        
+        dispatch(addLikeField())
+    }, [dispatch, postStatus])
 
+    const messages = useSelector(state => state.messages.messages)
+
+    
+    let content;
+
+    if (postStatus === 'pendind') {
+        content = <div>Loading...</div>
+    } else if (postStatus === 'completed') {
+        content = Object.entries(messages).map(([i, message]) => <MessagesEl message={message} key={ message.id}/> )
+    } else if (postStatus === 'failed') {
+        content = <div>Rejected</div>
+    }
 
     return (
-        <>{renderMessage}</>
+        <>
+            {content}
+        </>
+       
     )
 }

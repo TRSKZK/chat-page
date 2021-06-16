@@ -1,31 +1,22 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 const initialState = {
-    messages: [{
-        "id": "9333000183101",
-        "user": "Kate",
-        "avatar": "https://i.pravatar.cc/300?img=5",
-        "created_at": "2021-05-17 23:30:11",
-        "message": "Hey, guys! Have you seen the new episode of 'Black Mirror'?"
-      },
-      {
-        "id": "9333000183102",
-        "user": "Dave",
-        "avatar": "https://i.pravatar.cc/300?img=14",
-        "created_at": "2021-05-17 23:54:45",
-        "message": "Nay, not yet:-("
-        },
-        {
-            "id": "9333000183102",
-            "user": "Dave",
-            "avatar": "https://i.pravatar.cc/300?img=14",
-            "created_at": "2021-05-17 23:54:45",
-            "message": "Nay, not yet:-("
-          }],
-    
+    messages: [],
     status: 'Idle',
     error: null,
 }
+
+
+export const fetchMessages = createAsyncThunk('messages/fetchMessages', async () => {
+  const response = await fetch('https://run.mocky.io/v3/b13799bf-0bf4-4a74-bf46-b7a2fb35a8c8')
+  const data = await response.json()
+  return data
+  
+})
+
+
+
 
 const MessagesSlice = createSlice({
     name: 'messages',
@@ -68,6 +59,20 @@ const MessagesSlice = createSlice({
         console.log(id);
         if(existingMessage) existingMessage.like += 1
       }
+  },
+  extraReducers: {
+    [fetchMessages.pending]: (state, action)=>{
+      state.status = 'pending'
+    },
+    [fetchMessages.fulfilled]: (state, action) => {
+      state.status = 'completed'
+      state.messages = state.messages.concat(action.payload)
+    },
+    [fetchMessages.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    }
+
     }
 
 })
