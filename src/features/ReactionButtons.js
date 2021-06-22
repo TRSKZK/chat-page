@@ -67,14 +67,8 @@ export const ReactionButtons = ({ user, id}) => {
         dispatch(decreaseLike(rightMessage))
     }
     
-    const handleEditButton = () => {
-        const rightMessage = findMessageId()
-        console.log(rightMessage);
-
-    }
-
     
-
+    
     return (
         <ReactionWrapp>
             <Heart onClick={handleAddLikesBtn} user={user}
@@ -85,7 +79,6 @@ export const ReactionButtons = ({ user, id}) => {
             <TrashIcon
                 onClick={deleteOnClick}
                 user={user} icon={faTrashAlt} />
-            <EditIcon onClick={handleEditButton} user={user} icon={farEdit}/>
         </ReactionWrapp>
     )
 
